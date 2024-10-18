@@ -1,4 +1,4 @@
-package routes
+package handlers
 
 import (
 	"fmt"
@@ -8,8 +8,6 @@ import (
 func SetupRoutes(mux *http.ServeMux) {
 	// GET
 	mux.HandleFunc("GET /", rootHandler)
-
-	mux.HandleFunc("GET /login/", loginHandler)
 
 	mux.HandleFunc("GET /chat/ai", aiChatGetHandler)
 	mux.HandleFunc("GET /chat/psychologist", psychologistChatGetHandler)
@@ -23,10 +21,6 @@ func SetupRoutes(mux *http.ServeMux) {
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "main page")
-}
-
-func loginHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "login page")
 }
 
 func aiChatGetHandler(w http.ResponseWriter, r *http.Request) {
