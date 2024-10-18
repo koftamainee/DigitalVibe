@@ -8,8 +8,11 @@
 # Frontend Service Dockerfile
 FROM nginx:alpine
 
-COPY . .
+# Copy your static website files to Nginx's html directory
+COPY . /usr/share/nginx/html
 
-# Expose the port the service will run on
+# Expose the port Nginx will run on
 EXPOSE 80
 
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
