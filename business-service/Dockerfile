@@ -1,25 +1,23 @@
-# Business Logic Service Dockerfile
+# Stage 1: Build the Go app
 FROM golang:latest AS builder
 
 WORKDIR /app
 
-# Copy go.mod and go.sum files
 COPY go.mod go.sum ./
+
 RUN go mod download
 
-# Copy the rest of your application code
 COPY . .
 
-# Build the application
-RUN go build -o business-service .
+RUN CGO_ENABLED=0 GOOS=linux go build -o business-service main.go
 
-# Final stage
-FROM gcr.io/distroless/base
 
-COPY --from=builder /app/business-service /business-service
+FROM alpine:latest
 
-# Expose the port the service will run on
+WORKDIR /root/
+
+COPY --from=builder /app/business-service .
+
 EXPOSE 8082
 
-# Command to run the executable
-CMD ["/business-service"]
+CMD ["./business-service"]

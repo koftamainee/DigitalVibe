@@ -20,21 +20,22 @@ services:
     environment:
       DATABASE_URL: postgres://youruser:yourpassword@db:5432/yourdb
 
+
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: youruser
-      POSTGRES_PASSWORD: yourpassword
-      POSTGRES_DB: yourdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
       - my-network
 
   frontend:
-    build: ./frontend
+    build: ./frontend-service
     ports:
-      - "3000:3000"
+      - "80:80"
     networks:
       - my-network
 
