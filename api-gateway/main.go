@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	userServiceURL = "http://localhost:8081"
-	taskServiceURL = "http://localhost:8082"
+	userServiceURL = "http://user-service:8081"
+	taskServiceURL = "http://task-service:8082"
 )
 
 func main() {
@@ -18,10 +18,10 @@ func main() {
 	mux.HandleFunc("/", forwardToTaskService)
 	mux.HandleFunc("/chat/ai", forwardToTaskService)
 	mux.HandleFunc("/chat/psychologist", forwardToTaskService)
-	mux.HandleFunc("/tracker/", forwardToTaskService)
-	mux.HandleFunc("/tracker/emotion", forwardToTaskService)
-	mux.HandleFunc("/tracker/stress", forwardToTaskService)
-	mux.HandleFunc("/tracker/diary", forwardToTaskService)
+	mux.HandleFunc("/trackers/", forwardToTaskService)
+	mux.HandleFunc("/trackers/emotion", forwardToTaskService)
+	mux.HandleFunc("/trackers/stress", forwardToTaskService)
+	mux.HandleFunc("/trackers/diary", forwardToTaskService)
 
 	// User Service routes
 	mux.HandleFunc("/login", forwardToUserService)
@@ -59,7 +59,6 @@ func proxyRequest(w http.ResponseWriter, r *http.Request, serviceURL string) {
 
 	// Create an HTTP client and forward the request
 	client := &http.Client{}
-	log.Println(req)
 	resp, err := client.Do(req)
 
 	if err != nil {
@@ -68,6 +67,8 @@ func proxyRequest(w http.ResponseWriter, r *http.Request, serviceURL string) {
 		return
 	}
 	defer resp.Body.Close()
+
+	log.Println("Forwarded from http://api-gateway:8080"+r.URL.String(), "to", req.URL)
 
 	for name, values := range resp.Header {
 		for _, value := range values {

@@ -14,10 +14,10 @@ func SetupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/chat/psychologist", psychologistChatGetHandler)
 
 	// Tracker-related routes
-	mux.HandleFunc("/tracker/", trackersHandler)
-	mux.HandleFunc("/tracker/emotion", emotionTrackerHandler)
-	mux.HandleFunc("/tracker/stress", stressTrackerHandler)
-	mux.HandleFunc("/tracker/diary", diaryTrackerHandler)
+	mux.HandleFunc("/trackers/", trackersHandler)
+	mux.HandleFunc("/trackers/emotion", emotionTrackerHandler)
+	mux.HandleFunc("/trackers/stress", stressTrackerHandler)
+	mux.HandleFunc("/trackers/diary", diaryTrackerHandler)
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
