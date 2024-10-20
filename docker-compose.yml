@@ -1,4 +1,14 @@
 services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+    depends_on:
+      - user-service
+      - task-service
+
   user-service:
     build: ./user-service
     ports:
@@ -8,8 +18,8 @@ services:
     environment:
       DATABASE_URL: postgres://youruser:yourpassword@db:5432/yourdb
 
-  business-service:
-    build: ./business-service
+  task-service:
+    build: ./task-service
     ports:
       - "8082:8082"
     networks:

@@ -12,6 +12,6 @@ func main() {
 
 	handlers.SetupRoutes(mux)
 
-	log.Println("User Service running on port 8082")
+	log.Println("Task Service running on port 8082")
 	log.Fatal(http.ListenAndServe(":8082", mux))
 }

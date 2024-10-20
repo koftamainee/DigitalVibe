@@ -8,15 +8,15 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o user-service main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o api-gateway main.go
 
 
 FROM gcr.io/distroless/base-debian12
 
 WORKDIR /root/
 
-COPY --from=builder /app/user-service .
+COPY --from=builder /app/api-gateway .
 
-EXPOSE 8081
+EXPOSE 8080
 
-CMD ["./user-service"]
+CMD ["./api-gateway"]
