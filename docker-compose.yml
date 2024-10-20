@@ -1,19 +1,31 @@
 services:
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" 
+    depends_on:
+      - task-service
+      - user-service
+    networks:
+      - app-network
+
   user-service:
     build: ./user-service
     ports:
       - "8081:8081"
     networks:
-      - my-network
+      - app-network
     environment:
       DATABASE_URL: postgres://youruser:yourpassword@db:5432/yourdb
 
-  business-service:
-    build: ./business-service
+  task-service:
+    build: ./task-service
     ports:
       - "8082:8082"
     networks:
-      - my-network
+      - app-network
     depends_on:
       - user-service
       - db
@@ -30,14 +42,14 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
-      - my-network
+      - app-network
 
   frontend:
     build: ./frontend-service
     ports:
       - "80:80"
     networks:
-      - my-network
+      - app-network
 
   # prometheus:
   #   image: prom/prometheus:latest
@@ -48,7 +60,7 @@ services:
   #   ports:
   #     - "9090:9090"
   #   networks:
-  #     - my-network
+  #     - app-network
 
   # grafana:
   #   image: grafana/grafana:latest
@@ -57,13 +69,13 @@ services:
   #   depends_on:
   #     - prometheus
   #   networks:
-  #     - my-network
+  #     - app-network
   #   environment:
   #     - GF_SECURITY_ADMIN_USER=admin
   #     - GF_SECURITY_ADMIN_PASSWORD=admin
 
 networks:
-  my-network:
+  app-network:
     driver: bridge
 
 volumes:

@@ -7,9 +7,8 @@ import (
 
 func SetupRoutes(mux *http.ServeMux) {
 	// GET
-
-	mux.HandleFunc("GET /login/", loginHandler)
-	mux.HandleFunc("GET /register/", registerHandler)
+	mux.HandleFunc("/login", loginHandler)
+	mux.HandleFunc("/register", registerHandler)
 
 }
 
