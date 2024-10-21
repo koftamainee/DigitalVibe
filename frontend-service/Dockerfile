@@ -1,3 +1,6 @@
+## EXAMPLE DOCKERFILE
+## MAKE YOUR OWN
+
 FROM node:alpine
 
 WORKDIR /app
